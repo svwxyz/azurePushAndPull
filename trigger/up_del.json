@@ -1,0 +1,24 @@
+{
+	"name": "up_del",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Router",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/thesource/blobs/Trigger",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/68689da5-f724-47a0-8033-3b276044724b/resourceGroups/dataFactoryPro/providers/Microsoft.Storage/storageAccounts/svstoragetwoo",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"name": "git",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "with_github",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"file_path": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "anshlambagit/AnshLambaYoutube/refs/heads/main/ADF_PRO/@{dataset().file_path}",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

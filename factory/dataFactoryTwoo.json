@@ -1,0 +1,9 @@
+{
+	"name": "dataFactoryTwoo",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "46a05a6a-e701-4c20-9b87-02570926946b",
+		"tenantId": "de612c99-520e-4c8b-b2e2-3c66801c8eeb"
+	}
+}

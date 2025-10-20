@@ -1,0 +1,21 @@
+{
+	"name": "prev_cdc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "with_dl_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "empty.json",
+				"folderPath": "monitor",
+				"fileSystem": "thesource"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

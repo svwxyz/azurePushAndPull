@@ -1,0 +1,82 @@
+{
+	"name": "Scheduled",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Ingestion",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"schema": {
+							"value": "@pipeline().parameters.Schema",
+							"type": "Expression"
+						},
+						"table": {
+							"value": "@pipeline().parameters.table",
+							"type": "Expression"
+						},
+						"past_date": {
+							"value": "@pipeline().parameters.backdate",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "alerts",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-19.centralindia.logic.azure.com:443/workflows/128f4f4c36d944f3bc7f6809c95abdb7/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=li3tGvtMm88dyFFZU0PTyaL9Z8tELuFNP8zI2O2cEoU",
+					"body": {
+						"value": "{\n    \"pipeline_name\" : \"@{pipeline().Pipeline}\",\n    \"pipeline_runId\" : \"@{pipeline().RunId}\"\n\n\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Schema": {
+				"type": "string",
+				"defaultValue": "source"
+			},
+			"table": {
+				"type": "string",
+				"defaultValue": "Orders"
+			},
+			"backdate": {
+				"type": "string",
+				"defaultValue": "\""
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-10-16T14:09:01Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
