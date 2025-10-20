@@ -1,0 +1,112 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "dataFactoryTwoo"
+		},
+		"with_dl_storage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'with_dl_storage'"
+		},
+		"with_sqlDatabase_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'with_sqlDatabase'"
+		},
+		"with_dl_storage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://svstoragetwoo.dfs.core.windows.net/"
+		},
+		"with_github_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com"
+		},
+		"with_sqlDatabase_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "svsqlserver.database.windows.net"
+		},
+		"with_sqlDatabase_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "database_pro"
+		},
+		"with_sqlDatabase_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "svwxyz"
+		},
+		"Scheduled_properties_Scheduled_parameters_Schema": {
+			"type": "string",
+			"defaultValue": "source"
+		},
+		"Scheduled_properties_Scheduled_parameters_table": {
+			"type": "string",
+			"defaultValue": "Orders"
+		},
+		"up_del_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/68689da5-f724-47a0-8033-3b276044724b/resourceGroups/dataFactoryPro/providers/Microsoft.Storage/storageAccounts/svstoragetwoo"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "dataFactoryTwoo_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"with_dl_storage_accountKey": {
+						"value": "[parameters('with_dl_storage_accountKey')]"
+					},
+					"with_sqlDatabase_password": {
+						"value": "[parameters('with_sqlDatabase_password')]"
+					},
+					"with_dl_storage_properties_typeProperties_url": {
+						"value": "[parameters('with_dl_storage_properties_typeProperties_url')]"
+					},
+					"with_github_properties_typeProperties_url": {
+						"value": "[parameters('with_github_properties_typeProperties_url')]"
+					},
+					"with_sqlDatabase_properties_typeProperties_server": {
+						"value": "[parameters('with_sqlDatabase_properties_typeProperties_server')]"
+					},
+					"with_sqlDatabase_properties_typeProperties_database": {
+						"value": "[parameters('with_sqlDatabase_properties_typeProperties_database')]"
+					},
+					"with_sqlDatabase_properties_typeProperties_userName": {
+						"value": "[parameters('with_sqlDatabase_properties_typeProperties_userName')]"
+					},
+					"up_del_properties_typeProperties_scope": {
+						"value": "[parameters('up_del_properties_typeProperties_scope')]"
+					},
+					"Scheduled_properties_Scheduled_parameters_Schema": {
+						"value": "[parameters('Scheduled_properties_Scheduled_parameters_Schema')]"
+					},
+					"Scheduled_properties_Scheduled_parameters_table": {
+						"value": "[parameters('Scheduled_properties_Scheduled_parameters_table')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

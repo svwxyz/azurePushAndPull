@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dataFactoryTwoo"
+		},
+		"with_dl_storage_accountKey": {
+			"value": ""
+		},
+		"with_sqlDatabase_password": {
+			"value": ""
+		},
+		"with_dl_storage_properties_typeProperties_url": {
+			"value": "https://svstoragetwoo.dfs.core.windows.net/"
+		},
+		"with_github_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com"
+		},
+		"with_sqlDatabase_properties_typeProperties_server": {
+			"value": "svsqlserver.database.windows.net"
+		},
+		"with_sqlDatabase_properties_typeProperties_database": {
+			"value": "database_pro"
+		},
+		"with_sqlDatabase_properties_typeProperties_userName": {
+			"value": "svwxyz"
+		},
+		"Scheduled_properties_Scheduled_parameters_Schema": {
+			"value": "source"
+		},
+		"Scheduled_properties_Scheduled_parameters_table": {
+			"value": "Orders"
+		},
+		"up_del_properties_typeProperties_scope": {
+			"value": "/subscriptions/68689da5-f724-47a0-8033-3b276044724b/resourceGroups/dataFactoryPro/providers/Microsoft.Storage/storageAccounts/svstoragetwoo"
+		}
+	}
+}
