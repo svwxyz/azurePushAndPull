@@ -1,0 +1,17 @@
+{
+	"name": "External_Resources",
+	"properties": {
+		"content": {
+			"query": "------------------------\n----DataBase Credential\n------------------------\n\nCREATE DATABASE SCOPED CREDENTIAL sv_CRED\nWITH IDENTITY = 'Managed Identity';\n\n------------------------\n----Data Source\n------------------------\nCREATE EXTERNAL DATA SOURCE silver_source\nWITH \n(\n    LOCATION ='https://raw0data0source.blob.core.windows.net/silver',\n    CREDENTIAL = sv_CRED\n)\n\nCREATE EXTERNAL DATA SOURCE gold_source\nWITH \n(\n    LOCATION ='https://raw0data0source.blob.core.windows.net/gold',\n    CREDENTIAL = sv_CRED\n)\n\n------------------------\n----EXTERNAL FILE FORMAT\n------------------------\nCREATE EXTERNAL FILE FORMAT PARQUET\nWITH \n(\n    FORMAT_TYPE = PARQUET\n)\n\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "serverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

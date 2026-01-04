@@ -1,0 +1,77 @@
+{
+	"name": "silverData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Synapse_dlake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Retail_Transactions_Dataset.parquet",
+				"folderPath": "1",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Transaction_ID",
+				"type": "UTF8"
+			},
+			{
+				"name": "Date",
+				"type": "INT96"
+			},
+			{
+				"name": "Customer_Name",
+				"type": "UTF8"
+			},
+			{
+				"name": "Product",
+				"type": "UTF8"
+			},
+			{
+				"name": "Total_Items",
+				"type": "INT64"
+			},
+			{
+				"name": "Total_Cost",
+				"type": "DECIMAL",
+				"precision": 38,
+				"scale": 18
+			},
+			{
+				"name": "Payment_Method",
+				"type": "UTF8"
+			},
+			{
+				"name": "City",
+				"type": "UTF8"
+			},
+			{
+				"name": "Store_Type",
+				"type": "UTF8"
+			},
+			{
+				"name": "Discount_Applied",
+				"type": "UTF8"
+			},
+			{
+				"name": "Customer_Category",
+				"type": "UTF8"
+			},
+			{
+				"name": "Season",
+				"type": "UTF8"
+			},
+			{
+				"name": "Promotion",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

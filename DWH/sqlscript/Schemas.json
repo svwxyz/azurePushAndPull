@@ -1,0 +1,17 @@
+{
+	"name": "Schemas",
+	"properties": {
+		"content": {
+			"query": "------------------------\n----SCHEMAS\n------------------------\n\nCREATE SCHEMA silver;\nCREATE SCHEMA gold;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "serverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

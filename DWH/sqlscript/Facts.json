@@ -1,0 +1,17 @@
+{
+	"name": "Facts",
+	"properties": {
+		"content": {
+			"query": "--Fact Table--\n-------------\n\nSELECT top 3 * from silver.retail;\n\nselect \n    \n    Transaction_id,\n    Total_Items,\n    Total_Cost,\n    Cost_per_item",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "serverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

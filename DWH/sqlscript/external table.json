@@ -1,0 +1,17 @@
+{
+	"name": "external table",
+	"properties": {
+		"content": {
+			"query": "------------------------\n----EXTERNAL TABLE\n------------------------\n\nCREATE EXTERNAL TABLE silver.retail\n(\n    Transaction_ID      VARCHAR(50),\n    [Date]              DATETIME2,      -- IMPORTANT\n    Customer_Name       VARCHAR(100),\n    Product             VARCHAR(100),\n    Total_Items         INT,\n    Total_Cost          DECIMAL(10,2),\n    Payment_Method      VARCHAR(50),\n    City                VARCHAR(50),\n    Store_Type          VARCHAR(50),\n    Discount_Applied    VARCHAR(10),\n    Customer_Category   VARCHAR(50),\n    Season              VARCHAR(20),\n    Promotion           VARCHAR(50),\n    [Year]              INT,\n    [Month]             INT,\n    DataKey             INT,\n    [Day]               INT,\n    Cost_per_Item       DECIMAL(10,2)\n)\nWITH\n(\n    LOCATION = '2/',              -- folder inside container\n    DATA_SOURCE = silver_source,        -- your external data source\n    FILE_FORMAT = PARQUET\n);\n\n\n\nSELECT * from silver.retail;\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "serverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

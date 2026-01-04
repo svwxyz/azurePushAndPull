@@ -1,0 +1,101 @@
+{
+	"name": "Transformation",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "silverData",
+						"type": "DatasetReference"
+					},
+					"name": "silverData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "transformed_p",
+						"type": "DatasetReference"
+					},
+					"name": "Final"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "flatten1"
+				},
+				{
+					"name": "Adding"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Transaction_ID as string,",
+				"          Date as timestamp,",
+				"          Customer_Name as string,",
+				"          Product as string,",
+				"          Total_Items as long,",
+				"          Total_Cost as decimal(38,18),",
+				"          Payment_Method as string,",
+				"          City as string,",
+				"          Store_Type as string,",
+				"          Discount_Applied as string,",
+				"          Customer_Category as string,",
+				"          Season as string,",
+				"          Promotion as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> silverData",
+				"silverData derive(Year = year(Date),",
+				"          Month = month(Date),",
+				"          DataKey = toInteger(toString(Date,'yyyyMMdd')),",
+				"          Day = dayOfYear(Date),",
+				"          Product = split(\r",
+				"    replace(replace(Product,'[',''),']',''),\r",
+				"    ','\r",
+				"),",
+				"          Total_Cost = round(Total_Cost,2),",
+				"          Discount_Applied = iif(upper(Discount_Applied)==\"TRUE\", 'Yes', 'No'),",
+				"          Promotion = replace(Promotion, 'None', 'No Promotion')) ~> derivedColumn1",
+				"derivedColumn1 foldDown(unroll(Product),",
+				"     mapColumn(",
+				"          Transaction_ID,",
+				"          Date,",
+				"          Customer_Name,",
+				"          Product,",
+				"          Total_Items,",
+				"          Total_Cost,",
+				"          Payment_Method,",
+				"          City,",
+				"          Store_Type,",
+				"          Discount_Applied,",
+				"          Customer_Category,",
+				"          Season,",
+				"          Promotion,",
+				"          Year,",
+				"          Month,",
+				"          DataKey,",
+				"          Day",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 derive(Product = replace(Product,'\\'',''),",
+				"          Cost_per_Item = round(Total_Cost/Total_Items,2)) ~> Adding",
+				"Adding sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Final"
+			]
+		}
+	}
+}

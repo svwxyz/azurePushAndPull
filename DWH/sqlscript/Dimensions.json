@@ -1,0 +1,17 @@
+{
+	"name": "Dimensions",
+	"properties": {
+		"content": {
+			"query": "----------------\n--DIMENSION DATE\n----------------\nCREATE EXTERNAL TABLE gold.DimDate\nWITH \n(\n    LOCATION = 'DimDate',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = PARQUET\n) AS\nselect \n    Datakey,\n    [Date],\n    [Day],\n    [Month],\n    [Year]\nfrom silver.retail;\n\nselect * from silver.retail;\n----------------\n--DIMENSION PRODUCT\n----------------\n\nCREATE EXTERNAL TABLE gold.DimProduct\nWITH\n(\n    LOCATION = 'DimProduct',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = PARQUET\n)  AS\nSELECT\n    ABS(CHECKSUM(Product)) AS ProductKey,\n    Product\nFROM (\n    SELECT DISTINCT TRIM(Product) AS Product\n    FROM silver.retail\n    WHERE Product IS NOT NULL\n) p;\n\n\n\nselect * from gold.DimProduct;\n\n----------------\n--DIMENSION Customer\n----------------\nselect * from silver.retail;\n\ncreate EXTERNAL table gold.DimCustomer\nwith \n(\n    LOCATION = 'DimCustomer',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = PARQUET\n)as \nselect\n    abs(checksum(Customer_name)) as CustomerKey,\n    Customer_name,\n    Customer_category from \n(\nselect \n    DISTINCT\n    trim(customer_name) as Customer_name ,\n    trim(customer_category)as Customer_category\nfrom silver.retail\nwhere customer_name is not null\n)c;\n\nselect * from gold.dimcustomer;\n\n\n----------------\n--DIMENSION Store\n----------------\nCREATE EXTERNAL TABLE gold.DimStore\nWITH\n(\n    LOCATION = 'DimStore/',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = Parquet\n)\nAS\nSELECT\n    ABS(CHECKSUM(City, Store_Type)) AS StoreKey,\n    City,\n    Store_Type\nFROM\n(\n    SELECT DISTINCT\n        TRIM(City)       AS City,\n        TRIM(Store_Type) AS Store_Type\n    FROM silver.retail\n    WHERE City IS NOT NULL\n) s;\n\nselect * from gold.DimStore;\n\n\n\n----------------\n--DIMENSION Production\n----------------\nCREATE EXTERNAL TABLE gold.DimPromotion\nWITH\n(\n    LOCATION = 'DimPromotion/',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = Parquet\n)\nAS\nSELECT\n    ABS(CHECKSUM(Promotion, Discount_Applied)) AS PromotionKey,\n    Promotion,\n    Discount_Applied\nFROM\n(\n    SELECT DISTINCT\n        TRIM(Promotion)         AS Promotion,\n        TRIM(Discount_Applied)  AS Discount_Applied\n    FROM silver.retail\n    WHERE Promotion IS NOT NULL\n) p;\n\n\n\n\n\n\n\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "serverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
