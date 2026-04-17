@@ -12,7 +12,7 @@
 			"metadata": "Secure string for 'accountKey' of 'with_dl_storage'"
 		},
 		"with_sqlDatabase_password": {
-			"type": "secureString",
+			"type": "secureString", 
 			"metadata": "Secure string for 'password' of 'with_sqlDatabase'"
 		},
 		"with_dl_storage_properties_typeProperties_url": {
